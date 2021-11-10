@@ -30,7 +30,7 @@ class CalculatorModel: ObservableObject {
     // Select the appropriate function based on the label of the button pressed
     func buttonPressed(label: String) {
         if label == "CE" {
-            // TODO?
+            displayValue = "0"
             reset()
         } else if label == "=" {
             equalsClicked()
@@ -43,8 +43,13 @@ class CalculatorModel: ObservableObject {
         }
     }
     
+    // This resets the state of the calculator
     func reset() {
-        
+        currentOp = nil
+        currentNumber = 0
+        previousNumber = nil
+        equaled = false
+        decimalPlace = 0
     }
     
     func equalsClicked() {
