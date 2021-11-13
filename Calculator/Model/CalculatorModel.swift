@@ -62,10 +62,39 @@ class CalculatorModel: ObservableObject {
     
     func numberPressed(value: Double) {
         
+        // If equals was pressed, clear the current numbers
+        if equaled {
+            currentNumber = nil
+            previousNumber = nil
+            equaled = false
+        }
+        
+        // If there is no current number, set it to the value
+        if currentNumber == nil {
+            currentNumber = value / pow(10, decimalPlace)
+        } else {
+            // Otherwise, add the value to the current number
+            
+            // If no decimal was typed, add the value as the last digit of the number
+            if decimalPlace == 0 {
+                currentNumber = currentNumber! * 10 + value
+                
+                // Otherwise, add the value as the last decimal of the number
+            } else {
+                currentNumber = currentNumber! + value/pow(10, decimalPlace)
+                decimalPlace += 1
+            }
+        }
+        
+        // Update the UI
     }
     
     func operatorPressed(op: Operator) {
         
     }
     
+}
+
+func pow(_ base: Int, _ exp: Int) -> Double {
+    return pow(Double(base), Double(exp))
 }

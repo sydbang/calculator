@@ -15,8 +15,6 @@ struct CalculatorButton: View {
     
     var body: some View {
         
-        
-        
         Button(action: {
             // Inform model of button press
             calculator.buttonPressed(label: label)
