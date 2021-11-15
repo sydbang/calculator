@@ -43,6 +43,18 @@ class CalculatorModel: ObservableObject {
         }
     }
     
+    func setDisplayValue(number: Double) {
+        // Don't display a decimal if the number is int
+        if number == floor(number) {
+            displayValue = "\(Int(number))"
+        }
+        // Otherwise, display decimal
+        else {
+            let decimalPlaces = 10
+            displayValue = "\(round(number * pow(10,decimalPlaces)/pow(10, decimalPlaces)))"
+        }
+    }
+    
     // This resets the state of the calculator
     func reset() {
         currentOp = nil
@@ -85,8 +97,8 @@ class CalculatorModel: ObservableObject {
                 decimalPlace += 1
             }
         }
-        
         // Update the UI
+        setDisplayValue(number: currentNumber!)
     }
     
     func operatorPressed(op: Operator) {
