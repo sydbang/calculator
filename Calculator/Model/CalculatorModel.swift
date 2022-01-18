@@ -43,7 +43,7 @@ class CalculatorModel: ObservableObject {
         }
     }
     
-    func setDisplayValue(number: Double) {
+    private func setDisplayValue(number: Double) {
         // Don't display a decimal if the number is int
         if number == floor(number) {
             displayValue = "\(Int(number))"
@@ -51,7 +51,7 @@ class CalculatorModel: ObservableObject {
         // Otherwise, display decimal
         else {
             let decimalPlaces = 10
-            displayValue = "\(round(number * pow(10,decimalPlaces)/pow(10, decimalPlaces)))"
+            displayValue = "\(round(number * pow(10,decimalPlaces))/pow(10, decimalPlaces))"
         }
     }
     
@@ -107,7 +107,21 @@ class CalculatorModel: ObservableObject {
     }
     
     func decimalClicked() {
-        
+        // If equals was pressed, reset the current number
+        if equaled {
+            currentNumber = nil
+            previousNumber = nil
+            equaled = false
+        }
+        // If a "." was typed first, set the current number
+        if currentNumber == nil {
+            currentNumber = 0
+        }
+        // Set the decimal place
+        decimalPlace = 1
+        // Update the UI
+        setDisplayValue(number: currentNumber!)
+        displayValue.append(".")
     }
     
     func numberPressed(value: Double) {
@@ -131,7 +145,7 @@ class CalculatorModel: ObservableObject {
                 
                 // Otherwise, add the value as the last decimal of the number
             } else {
-                currentNumber = currentNumber! + value/pow(10, decimalPlace)
+                currentNumber = currentNumber! + value / pow(10, decimalPlace)
                 decimalPlace += 1
             }
         }
